@@ -1,0 +1,245 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #9b59b6, #2980b9);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+/* Posisi Acak untuk Love */
+/* Styling dasar */
+/* Styling dasar */
+.love {
+    position: absolute;
+    font-size: 30px; /* Ukuran default */
+    opacity: 0.3;
+    transform: rotate(var(--rotate-angle));
+    z-index: -1;
+    filter: blur(1px);
+}
+
+/* KIRI (Posisi Acak) */
+.love1  { top: 3%; left: 12%; --rotate-angle: -15deg; font-size: 42px; }
+.love2  { top: 18%; left: 8%; --rotate-angle: 10deg; font-size: 35px; }
+.love3  { top: 26%; left: 20%; --rotate-angle: -8deg; }
+.love4  { top: 37%; left: 5%; --rotate-angle: 5deg; font-size: 40px; }
+.love5  { top: 48%; left: 28%; --rotate-angle: -12deg; }
+.love6  { top: 60%; left: 18%; --rotate-angle: 15deg; font-size: 50px; }
+.love7  { top: 72%; left: 6%; --rotate-angle: -5deg; font-size: 38px; }
+.love8  { top: 83%; left: 25%; --rotate-angle: 7deg; }
+.love9  { top: 91%; left: 10%; --rotate-angle: -10deg; }
+.love10 { bottom: 3%; left: 22%; --rotate-angle: 8deg; font-size: 32px; }
+.love11 { bottom: 12%; left: 6%; --rotate-angle: -18deg; }
+.love12 { bottom: 23%; left: 14%; --rotate-angle: 12deg; font-size: 45px; }
+.love13 { bottom: 30%; left: 20%; --rotate-angle: -7deg; }
+.love14 { bottom: 42%; left: 9%; --rotate-angle: 10deg; }
+.love15 { bottom: 52%; left: 27%; --rotate-angle: -5deg; }
+
+/* KANAN (Posisi Acak) */
+.love16 { top: 4%; right: 10%; --rotate-angle: 12deg; font-size: 40px; }
+.love17 { top: 15%; right: 24%; --rotate-angle: -8deg; }
+.love18 { top: 28%; right: 6%; --rotate-angle: 5deg; font-size: 35px; }
+.love19 { top: 39%; right: 20%; --rotate-angle: -15deg; }
+.love20 { top: 50%; right: 12%; --rotate-angle: 10deg; font-size: 42px; }
+.love21 { top: 63%; right: 5%; --rotate-angle: -8deg; }
+.love22 { top: 75%; right: 22%; --rotate-angle: 6deg; font-size: 38px; }
+.love23 { top: 85%; right: 8%; --rotate-angle: -7deg; }
+.love24 { top: 93%; right: 15%; --rotate-angle: 12deg; }
+.love25 { bottom: 5%; right: 25%; --rotate-angle: -10deg; font-size: 32px; }
+.love26 { bottom: 16%; right: 7%; --rotate-angle: 15deg; }
+.love27 { bottom: 27%; right: 18%; --rotate-angle: -5deg; font-size: 50px; }
+.love28 { bottom: 34%; right: 4%; --rotate-angle: 7deg; }
+.love29 { bottom: 45%; right: 23%; --rotate-angle: -12deg; }
+.love30 { bottom: 55%; right: 11%; --rotate-angle: 8deg; font-size: 45px; }
+
+
+
+
+/* Container puzzle */
+#puzzle-container {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: repeat(4, 100px);
+    gap: 0px;
+    justify-content: center;
+    margin: 20px auto;
+    width: fit-content;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+#finish-text h1 {
+    color: white; /* Ganti dengan warna yang diinginkan */
+}
+
+/* Styling untuk potongan puzzle */
+.piece {
+    width: 100px;
+    height: 100px;
+    background-size: 400px 400px;
+    border: 0.1px solid #000;
+    cursor: grab;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    outline: none !important;
+}
+
+/* Efek saat di-drag */
+.piece.dragging {
+    transform: scale(1.1);  /* Membesar sedikit saat di-drag */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);  /* Bayangan saat di-drag */
+    opacity: 0.5;  /* Mengurangi opacity saat di-drag */
+}
+
+.piece.hovered {
+    outline: 3px dashed rgba(0, 0, 0, 0.5); /* Efek border saat hover */
+}
+
+.piece:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    
+}
+/* Styling Popup */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden; /* Awalnya disembunyikan */
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Saat pop-up muncul */
+.popup.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #87ceeb;
+    color: white;
+    border-radius: 5px;
+}
+
+/* Menyembunyikan tombol Go to Next Page di awal */
+button.hidden {
+    display: none;
+}
+
+button:hover {
+    background-color: #00bfff;
+}
+
+.piece:focus, 
+.piece:active {
+    outline: none !important;
+}
+
+.piece.placed {
+    animation: placedEffect 0.5s ease-in-out;
+}
+
+@keyframes placedEffect {
+    0% {
+        transform: scale(1.2);
+        box-shadow: 0px 0px 15px rgba(5, 159, 255, 0.8);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: none;
+    }
+}
+
+#pin-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%); /* Sesuaikan angka kedua (-55%) untuk naik */
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.hidden {
+    display: none;
+}
+
+
+#pin-input {
+    padding: 10px;
+    font-size: 18px;
+    text-align: center;
+    width: 150px;
+    margin: 10px 0;
+}
+
+#pin-display {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    min-height: 30px; /* Agar tidak bergeser saat berubah */
+    color: #333;
+}
+
+
+#pin-error {
+    color: red;
+    margin-top: 10px;
+}
+
+#pin-clue {
+    color: blue;
+    margin-top: 10px;
+}
+
+#pin-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 60px);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.pin-btn, #pin-delete, #pin-submit {
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    background-color: #ddd;
+    border-radius: 10px;
+}
+
+#pin-delete {
+    background-color: #ff9999;
+}
+
+#pin-submit {
+    background-color: #99ff99;
+}
